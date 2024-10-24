@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro1
+  template:
+    metadata:
+      labels:
+        app: micro1
+    spec:
+      schedulerName: prematch-sched
+      containers:
+      - name: micro1
+        image: dcloud2.itec.aau.at:5000/aau/eless-vp-transcode:1.0
+        imagePullPolicy: IfNotPresent
+        resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+          requests:
+            cpu: "2"
+            memory: "1000Mi"
